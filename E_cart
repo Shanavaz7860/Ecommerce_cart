@@ -1,0 +1,87 @@
+class product:
+    def __init__(self,name,price,deal_price,ratings):
+        self.name=name
+        self.price=price
+        self.deal_price=deal_price
+        self.ratings=ratings
+        self.savings=price-deal_price
+      
+
+    def show_products(self):
+        print('product_name: ',self.name)
+        print('product_price: ',self.price)
+        print('product_discount: ',self.deal_price)
+        print('product_ratings: ',self.ratings)
+        print('product_saving: ',self.savings)
+
+    def get_deal_price(self):
+        return self.deal_price
+    
+class electronic_items(product):
+    
+    def __init__(self,name,price,deal_price,ratings,warranty_in_months):
+        super().__init__(name,price,deal_price,ratings)  
+        self.warranty_in_months=warranty_in_months
+    
+    def show_products(self):
+        super().show_products()  #accessing super_class method
+        print('WARRANTY ',self.warranty_in_months,'months')
+
+
+class grocery_items(product):
+    
+    def __init__(self,name,price,deal_price,ratings,expiry_date):
+        super().__init__(name,price,deal_price,ratings)  
+        self.expiry_date=expiry_date
+    
+    def show_products(self):
+        super().show_products()  #accessing super_class method
+        print('expiry ',self.expiry_date,'months')
+        
+class order:
+    delivery_charges={'normal':0,'prime_delivery':100}
+
+    def __init__(self,delivery_method,delivery_address):
+        self.items_in_cart=[]
+        self.delivery_method=delivery_method
+        self.delivery_address=delivery_address
+    def add_item(self,product,quantity):
+        items=(product,quantity)
+        self.items_in_cart.append(items)
+    def show_order_products(self):
+        print('delivery_method :',self.delivery_method)
+        print('delivery_address :',self.delivery_address)
+        print('products')
+        print('-----------------------------')
+        for item,quantity in self.items_in_cart:
+            item.show_products()
+            print('quantity :',quantity)
+            print()
+    def total_bill(self):
+        initial_bill=0
+        for item,quantity in self.items_in_cart:
+            initial_bill+=item.get_deal_price()*quantity
+            
+        order_delivery_charges=order.delivery_charges[self.delivery_method]
+        
+        initial_bill+=order_delivery_charges
+        print(initial_bill)
+      
+        
+electronic_1=electronic_items('charger',300,256,4,6)
+electronic_2=electronic_items('light',200,159,3.5,12)
+
+
+groce=grocery_items('butter',199,149,4.6,2)
+
+
+my_order=order('prime_delivery','hyderabad')
+
+my_order.add_item(electronic_1,2)  #we have to add object_names
+my_order.add_item(electronic_2,2)
+my_order.add_item(groce,2)
+my_order.show_order_products()
+my_order.total_bill()
+
+
+
