@@ -1,4 +1,5 @@
 class product:
+hi hello now im editing
     def __init__(self,name,price,deal_price,ratings):
         self.name=name
         self.price=price
